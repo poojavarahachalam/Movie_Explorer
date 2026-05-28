@@ -207,13 +207,15 @@ def update_movie(movie_id: int, updated_data: dict = Body()):
 
 
             return {
+                "success": True,
                 "message": "Movie Updated Successfully",
                 "updated_movie": movie
             }
 
 
     return {
-        "message": "Movie Not updated. Please try again!"
+        "success": False,
+        "message": "Movie Not Found"
     }
 
 

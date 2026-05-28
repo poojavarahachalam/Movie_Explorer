@@ -101,9 +101,7 @@ elif menu == "Search or Filter Movies":
             data = response.json()
             
             if "filtered_movies" in data:
-                
                 movies = data["filtered_movies"]
-                
                 st.success("Movies found successfully!")
                 
                 for movie in movies:
@@ -121,14 +119,11 @@ elif menu == "Search or Filter Movies":
 
                         with col4:
                             st.markdown(f"⭐ {movie.get('rating')}")
-                            
+
                         st.write("---")
 
             else:
                 st.error("Movie Not Found")
-    
-
-
 
 # -----------------------------
 # adding a movie
@@ -184,24 +179,27 @@ elif menu == "Update Movie":
         submit_button = st.form_submit_button(label="Update Movie")
 
     if submit_button:
-        Update_movie = {
-            "id": Movie_id,
+        update_movie = {
             "movie_name": Movie_name,
             "genre": genre,
             "language": language,
             "rating": rating
         }
+        
 
 
         response = requests.put(
             f"{API_URL}/updatemovie/{Movie_id}",
-            json=Update_movie
+            json=update_movie
             )
 
-        if response.status_code == 200:
+        data = response.json()
+        
+        if data["success"]:
             st.success(f"Movie '{Movie_name}' updated successfully!")
+
         else:
-            st.error(f"Movie '{Movie_name}' Not updated. Please try again!")
+            st.error(data["message"])
 
 
 # -----------------------------
