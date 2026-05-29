@@ -179,11 +179,21 @@ def search_movies(filters: dict = Body()):
 @app.post("/addmovie")
 def add_movie(movie: dict = Body()):
 
+    # Check if ID already exists
+    for existing_movie in Movies:
 
+        if existing_movie["id"] == movie["id"]:
+
+            return {
+                "success": False,
+                "message": "Movie ID already exists"
+            }
+
+    # Add new movie
     Movies.append(movie)
 
-
     return {
+        "success": True,
         "message": "Movie Added Successfully",
         "movie": movie
     }

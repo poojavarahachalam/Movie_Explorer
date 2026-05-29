@@ -157,10 +157,13 @@ elif menu == "Add New Movie":
             json=new_movie
         )
 
-        if response.status_code == 200:
+        data = response.json()
+        
+        if data["success"]:
             st.success(f"Movie '{Movie_name}' added successfully!")
+        
         else:
-            st.error(f"Movie '{Movie_name}' Not added. Please try again!")
+            st.error(data["message"])
 
 
 # -----------------------------
